@@ -2,8 +2,8 @@ package com.todoList.todo_list;
 
 import com.todoList.todo_list.entity.Role;
 import com.todoList.todo_list.entity.User;
-import com.todoList.todo_list.repository.RoleRepository;
-import com.todoList.todo_list.repository.UserRepository;
+import com.todoList.todo_list.repositories.RoleRepository;
+import com.todoList.todo_list.repositories.UserRepository;
 import com.todoList.todo_list.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -52,8 +52,8 @@ public class TodoListApplication  implements CommandLineRunner {
 					.orElseGet(() -> {
 						User u = new User();
 						u.setEmail("admin@system.com");
-						u.setName("Admin1");
-						u.setPassword(passwordEncoder.encode("admin"));
+						u.setName("Admin2");
+						u.setPassword(passwordEncoder.encode("admin12"));
 						u.setEnabled(true);
 						u.setLocked(false);
 						return userRepository.save(u);
@@ -62,9 +62,9 @@ public class TodoListApplication  implements CommandLineRunner {
 			User user = userRepository.findByEmail("user@system.com")
 					.orElseGet(() -> {
 						User u2 = new User();
-						u2.setEmail("user@system.com");
-						u2.setName("User1");
-						u2.setPassword(passwordEncoder.encode("user"));
+							u2.setEmail("user@system.com");
+						u2.setName("User2");
+						u2.setPassword(passwordEncoder.encode("user12"));
 						u2.setEnabled(false);
 						u2.setLocked(true);
 

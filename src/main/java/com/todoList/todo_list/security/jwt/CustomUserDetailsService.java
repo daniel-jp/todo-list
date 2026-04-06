@@ -1,7 +1,7 @@
 package com.todoList.todo_list.security.jwt;
 
 import com.todoList.todo_list.entity.User;
-import com.todoList.todo_list.repository.UserRepository;
+import com.todoList.todo_list.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

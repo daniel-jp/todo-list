@@ -33,18 +33,19 @@ public class Role {
         this.name = roleTitle;
     }
 
-    public void removeAllUsersFromRole(){
+    public void removeRoleFromAllUsers(){
         if (this.getUsers() != null){
             List<User> usersInRole = this.getUsers().stream().toList();
-            usersInRole.forEach(this::removeUserFromRole);
+            usersInRole.forEach(this::removeRoleFromUser);
         }
     }
 
 
-    public void removeUserFromRole(User user) {
+    public void removeRoleFromUser(User user) {
         user.getRoles().remove(this);
         this.getUsers().remove(user);
     }
+
     public void assignUserToRole(User user){
         user.getRoles().add(this);
         this.getUsers().add(user);

@@ -1,11 +1,14 @@
 package com.todoList.todo_list.service.role;
 
+import com.todoList.todo_list.dto.user.RoleResponseDTO;
+import com.todoList.todo_list.dto.user.RoleUpdateRequestDTO;
 import com.todoList.todo_list.entity.Role;
 import com.todoList.todo_list.entity.User;
 import com.todoList.todo_list.exception.UserAlreadyExistException;
 import com.todoList.todo_list.exception.UserNotFoundException;
-import com.todoList.todo_list.repository.RoleRepository;
-import com.todoList.todo_list.repository.UserRepository;
+import com.todoList.todo_list.repositories.RoleRepository;
+import com.todoList.todo_list.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,26 +48,6 @@ public class RoleService implements ImpRoleService {
         return roleRepository.save(theRole);
     }
 
-    @Override
-    public ResponseEntity<String> deleteRole(UUID roleId) {
-        Optional<Role> optional =roleRepository.findById(roleId);
-        if (optional.isEmpty()) {
-            throw  new UserNotFoundException("The User id "+roleId+" Role to delete not exist ❌");
-        }
-        this.removeAllUserFromRole(roleId);
-        roleRepository.deleteById(roleId);
-        return ResponseEntity.ok().build();
-    }
- /*
-    @Override
-    public Role findByName(String name) {
-        Optional<Role> roleOptional = roleRepository.findByName(name);
-        if (!roleOptional.isPresent()) {
-            throw new UserNotFoundException("User Role with name "+roleOptional.get().getName()+" not exist!");
-        }
-        return roleRepository.findByName(name).get();
-    }
- */
 
     @Override
     public Role findByName(String name) {
@@ -79,6 +62,19 @@ public class RoleService implements ImpRoleService {
 
 
 
+    public RoleResponseDTO updateRole(UUID roleId, RoleUpdateRequestDTO request) {
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new EntityNotFoundException("Role not found"));
+
+        role.setName(request.name());
+
+        Role updatedRole = roleRepository.save(role);
+
+        return new RoleResponseDTO(
+                updatedRole.getId(),
+                updatedRole.getName()
+        );
+    }
 
     @Override
     public Role findById(UUID roleId) {
@@ -88,20 +84,6 @@ public class RoleService implements ImpRoleService {
             throw new UserNotFoundException("User Role with name"+roleId+" not exist!");
         }
         return roleRepository.findById(roleId).get();
-    }
-
-    @Override
-    public User removeUserFromRole(UUID userId, UUID roleId) {
-
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Role> role = roleRepository.findById(roleId);
-
-        if (role.isPresent() && role.get().getUsers().contains(user.get())) {
-            role.get().removeUserFromRole(user.get());
-            roleRepository.save(role.get());
-            return user.get();
-        }
-        throw new UserNotFoundException("User not found ❗");
     }
 
     @Override
@@ -121,25 +103,41 @@ public class RoleService implements ImpRoleService {
     }
 
 
+    @Override
+    public ResponseEntity<String> deleteRoleById(UUID roleId) {
+        Optional<Role> optional =roleRepository.findById(roleId);
+        if (optional.isEmpty()) {
+            throw  new UserNotFoundException("The User id "+roleId+" Role to delete not exist ❌");
+        }
+        this.removeRoleFromAllUsers(roleId);
+        roleRepository.deleteById(roleId);
+        return ResponseEntity.ok().build();
+    }
+
+
 
     @Override
-    public Role removeAllUserFromRole(UUID roleId) {
+    public User removeRoleFromUser(UUID userId, UUID roleId) {
+
+        Optional<User> user = userRepository.findById(userId);
+        Optional<Role> role = roleRepository.findById(roleId);
+
+        if (role.isPresent() && role.get().getUsers().contains(user.get())) {
+            role.get().removeRoleFromUser(user.get());
+            roleRepository.save(role.get());
+            return user.get();
+        }
+        throw new UserNotFoundException("User not found ❗");
+    }
+
+    @Override
+    public Role removeRoleFromAllUsers(UUID roleId) {
         Role role = roleRepository.findById(roleId)
                 .orElseThrow(() -> new UserNotFoundException("Role not found with id: " +roleId));
 
         // Remove todos os usuários
-        role.removeAllUsersFromRole();
+        role.removeRoleFromAllUsers();
         return roleRepository.save(role);
     }
 
-
-    /*
-    @Override
-    public Role removeAllUserFromRole(UUID roleId) {
-        Optional<Role> role = roleRepository.findById(roleId);
-
-        role.ifPresent(Role::removeAllUsersFromRole);
-        return roleRepository.save(role.get());
-    }
-*/
-}
+} 

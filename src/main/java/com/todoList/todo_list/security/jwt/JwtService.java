@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtUtil {
+public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
     private String secret;
@@ -34,10 +34,11 @@ public class JwtUtil {
     public String generateToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getEmail())
-                //1) .claim("roles", user.getRoles())
+                //1) .claim("r  oles", user.getRoles())
              //  2) .claim("roles", user.getRoles().stream()
                //         .map(role -> role.getRoleTitle())
                 //        .collect(Collectors.toList()))
+                .claim("id", user.getId())
                 .claim("name", user.getName())
                 .claim("enabled", user.isEnabled())
                 .claim("locked", user.isLocked())

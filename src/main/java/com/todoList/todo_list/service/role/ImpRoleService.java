@@ -10,10 +10,10 @@ import java.util.UUID;
 public interface ImpRoleService {
     List<Role> getAllRoles();
     Role createRole(Role theRole);
-    ResponseEntity<String> deleteRole(UUID roleId);
+    ResponseEntity<String> deleteRoleById(UUID roleId);
     Role findByName(String name);
     Role findById(UUID roleId);
-    User removeUserFromRole(UUID userId, UUID roleId);
+    User removeRoleFromUser(UUID userId, UUID roleId);
     User assignUerToRole(UUID userId, UUID roleId);
-    Role removeAllUserFromRole(UUID roleId);
+    Role removeRoleFromAllUsers(UUID roleId);
 }

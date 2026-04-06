@@ -8,10 +8,14 @@ import java.util.UUID;
 
 @Builder
 public record RegisterRequestDTO(
-        UUID userId,
-
+        UUID id,
         String name,
         String email,
         String password,
-        List<Role> roles) {
+         boolean enabled,
+        boolean locked,
+        List<Role>roles
+
+
+) {
 }

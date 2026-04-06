@@ -1,5 +1,6 @@
 package com.todoList.todo_list.controller;
 
+
 import com.todoList.todo_list.dto.task.TaskDTO;
 import com.todoList.todo_list.dto.task.TaskRequest;
 import com.todoList.todo_list.service.TaskService;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
 @RestController
 @CrossOrigin(origins = "*") // Opcional: libera o acesso CORS
 @RequestMapping("/api/v1/tasks")
@@ -27,9 +27,16 @@ public class TaskController {
     // ✅ Listar todas as tarefas
     @GetMapping
     public ResponseEntity<List<TaskDTO>> getAllTasks() {
+
         return ResponseEntity.ok(taskService.listAllTask());
     }
+    // ✅ Buscar tarefa por ID
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskDTO> getTaskById(
+            @PathVariable("taskId") UUID taskId) {
 
+        return ResponseEntity.ok(taskService.findById(taskId));
+    }
     // ✅ Listar tarefas por ID do usuário
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<TaskDTO>> getTasksByUser(@PathVariable UUID userId) {
@@ -44,12 +51,14 @@ public class TaskController {
         return ResponseEntity.ok(taskService.updateTask(taskId, request));
     }
 
-    // ✅ Marcar tarefa como concluída
-    @PatchMapping("/{taskId}/complete")
-    public ResponseEntity<String> completeTask(@PathVariable("taskId") UUID taskId) {
 
-        return ResponseEntity.ok(taskService.completeTask(taskId));
+    @PatchMapping("/{taskId}/toggle")
+    public ResponseEntity<TaskDTO> toggleTask(@PathVariable UUID taskId) {
+        return ResponseEntity.ok(taskService.toggleTaskStatus(taskId));
     }
+
+
+
 
     // ✅ Deletar tarefa
     @DeleteMapping("/{taskId}")
@@ -58,4 +67,5 @@ public class TaskController {
         taskService.delete(taskId);
         return ResponseEntity.ok("Task created successful ✅");
     }
+
 }

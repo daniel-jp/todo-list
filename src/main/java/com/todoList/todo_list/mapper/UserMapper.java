@@ -3,10 +3,11 @@ package com.todoList.todo_list.mapper;
 import com.todoList.todo_list.dto.user.RegisterRequestDTO;
 import com.todoList.todo_list.dto.user.UserDTO;
 import com.todoList.todo_list.entity.User;
-import com.todoList.todo_list.repository.RoleRepository;
+import com.todoList.todo_list.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,16 +23,14 @@ public class UserMapper {
 
         if (request == null) return null;
 
-
-
         return User.builder()
-                //.id(request.userId() != null ? request.userId() : UUID.randomUUID())
+              //  .id(request.id() != null ? request.id() : UUID.randomUUID())
                 .name(request.name())
                 .email(request.email())
                 .password(request.password())
-               // .roles((List<Role>)(request.roles())) // assumindo que `User.roles` é `List<Role>`
                 .enabled(true)
                 .locked(false)
+                .roles(new ArrayList<>()) // 👈 inicializa vazio
                 .build();
     }
 
@@ -40,7 +39,7 @@ public class UserMapper {
         if (user == null) return null;
 
         return UserDTO.builder()
-                .userId(user.getId())
+                .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .enabled(user.isEnabled())

@@ -1,6 +1,7 @@
 package com.todoList.todo_list.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.todoList.todo_list.dto.user.RegisterRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,7 +50,6 @@ public class User implements UserDetails, Serializable {
     private List<Role> roles; // = new ArrayList<>();
 
 
-
     public User(User user) {
         name = user.getName();
         email = user.getEmail();
@@ -58,6 +58,15 @@ public class User implements UserDetails, Serializable {
         locked = user.isLocked();
         roles = user.roles;
     }
+
+    public User(RegisterRequestDTO request) {
+        this.name = request.name();
+        this.email = request.email();
+        this.password = request.password();
+        this.enabled =request.enabled();
+        this.locked = request.locked();
+    }
+
 
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,14 +88,19 @@ public class User implements UserDetails, Serializable {
     }
 
     @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+    @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return !this.locked;
     }
+
 
     @Override
     public boolean isCredentialsNonExpired() {

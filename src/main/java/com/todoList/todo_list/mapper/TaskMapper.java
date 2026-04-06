@@ -21,12 +21,12 @@ public class  TaskMapper {
         }
 
         return Task.builder()
-                //.id(request.taskId())
+                .id(request.taskId())
                 .title(request.title())
                 .description(request.description())
-                .status(request.status())
+               // .status(request.status()!=null ? request.status() : TaskStatus.PENDING)
                 .createdAt(new Date())
-                .doneDate(request.doneDate())
+               // .doneDate(request.doneDate())
                 .user(user)
                 .build();
     }
@@ -40,8 +40,8 @@ public class  TaskMapper {
                 task.getStatus(),
                 task.getCreatedAt(),
                 task.getDoneDate(),
-                task.getUser()
-        );
+                task.getUser().getId(),
+                task.getUser().getName()        );
     }
 
 

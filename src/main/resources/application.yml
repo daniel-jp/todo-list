@@ -1,17 +1,28 @@
 spring:
-
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/todoList_db}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    #url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/todoList_db}
+    #username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    #password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    #driver-class-name: org.postgresql.Driver
+
+  #jpa:
+    #hibernate:
+     # ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:create}
+    #show-sql: true
+    #database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+    url: jdbc:postgresql://localhost:5432/todoList_db
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:create}
+      ddl-auto: create
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-#  main:
+
+  #  main:
   #  allow-circular-references: true
 # 🔥 Corrigido: fora do bloco spring
 

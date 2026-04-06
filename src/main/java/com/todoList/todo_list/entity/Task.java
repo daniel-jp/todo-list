@@ -23,7 +23,9 @@ public class Task {
     private String title;
     private String description;
     @Enumerated(EnumType.STRING)
-    private TaskStatus status;
+    //@Column(nullable = false)
+    @Builder.Default
+    private TaskStatus status = TaskStatus.PENDING;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date createdAt;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")

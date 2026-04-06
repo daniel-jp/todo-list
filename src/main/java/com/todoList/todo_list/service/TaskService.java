@@ -6,8 +6,8 @@ import com.todoList.todo_list.enums.TaskStatus;
 import com.todoList.todo_list.exception.TaskNotFoundException;
 import com.todoList.todo_list.exception.UserNotFoundException;
 import com.todoList.todo_list.mapper.TaskMapper;
-import com.todoList.todo_list.repository.TaskRepository;
-import com.todoList.todo_list.repository.UserRepository;
+import com.todoList.todo_list.repositories.TaskRepository;
+import com.todoList.todo_list.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +32,8 @@ public class TaskService {
 
         var user = userRepo.findById(request.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         var task = mapper.toTask(request, user);
+        
         return mapper.toDTO(taskRepo.save(task));
     }
 
@@ -49,6 +49,15 @@ public class TaskService {
                 .toList();
     }
 
+    // ✅ Buscar tarefa por ID
+    public TaskDTO findById(UUID id) {
+        return taskRepo.findById(id)
+                .map(mapper::toDTO)
+                .orElseThrow(() ->
+                        new TaskNotFoundException("Task not found ❌"));
+    }
+
+
     // ✅ Atualizar tarefa
     public TaskDTO updateTask(UUID id, TaskRequest request) {
 
@@ -63,67 +72,58 @@ public class TaskService {
                 .map(task -> {
                     task.setTitle(request.title());
                     task.setDescription(request.description());
-                    task.setStatus(request.status());
-                    task.setDoneDate(request.doneDate());
+                   // task.setStatus(request.status());
+                   // task.setDoneDate(request.doneDate());
                     task.setUser(user.get());
                     return mapper.toDTO(taskRepo.save(task));
                 })
                 .orElseThrow(() -> new TaskNotFoundException("Task not found ❌"));
     }
 
+/*
 
-    // ✅ Marcar como concluída
-    public String completeTask(UUID id) {
+    public TaskDTO toggleTaskStatus(UUID id) {
         return taskRepo.findById(id)
                 .map(task -> {
 
                     if (task.getStatus() == TaskStatus.PENDING) {
                         task.setStatus(TaskStatus.PROCESSING);
-                        mapper.toDTO(taskRepo.save(task));
-                        return "PROCESSING ⌛";
-
-                    } else if (task.getStatus() == TaskStatus.PROCESSING) {
+                    }
+                    else if (task.getStatus() == TaskStatus.PROCESSING) {
                         task.setStatus(TaskStatus.COMPLETED);
                         task.setDoneDate(new Date());
-                        mapper.toDTO(taskRepo.save(task));
-                        return "COMPLETED ✅";
-
-                    } else {
-
-                        mapper.toDTO(taskRepo.save(task));
-                        return "ALREADY COMPLETED ❗";
-
                     }
+                    else if (task.getStatus() == TaskStatus.COMPLETED) {
+                        task.setStatus(TaskStatus.PROCESSING);
+                        task.setDoneDate(null);
+                    }
+
+                    return mapper.toDTO(taskRepo.save(task));
                 })
-                .orElseThrow(() -> new TaskNotFoundException ("Task not found  ❌"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found ❌"));
     }
 
-     /*
 
-    public String complete(UUID id) {
+ */
 
+    public TaskDTO toggleTaskStatus(UUID id) {
         return taskRepo.findById(id)
                 .map(task -> {
-                    if (task.getStatus() == TaskStatus.PENDING) {
-                        task.setStatus(TaskStatus.PROCESSING);
-                        taskRepo.save(task);
-                        return "processing";
-                    } else if (task.getStatus() == TaskStatus.PROCESSING) {
-                        task.setStatus(TaskStatus.COMPLETED);
-                        task.setDoneDate(new Date());
-                        taskRepo.save(task);
-                        mapper.toDTO(taskRepo.save(task));
-
-                        return "completed";
-                    } else {
-                        return "already completed";
+                    switch (task.getStatus()) {
+                        case PENDING -> task.setStatus(TaskStatus.PROCESSING);
+                        case PROCESSING -> {
+                            task.setStatus(TaskStatus.COMPLETED);
+                            task.setDoneDate(new Date());
+                        }
+                        case COMPLETED -> {
+                            task.setStatus(TaskStatus.PENDING);
+                            task.setDoneDate(null);
+                        }
                     }
+                    return mapper.toDTO(taskRepo.save(task));
                 })
-                .orElseThrow(() -> new RuntimeException("Task not found ❌"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found ❌"));
     }
-
-     */
-
 
     // ✅ Deletar tarefa
     public void delete(UUID id) {
