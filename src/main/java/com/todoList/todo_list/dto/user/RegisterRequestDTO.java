@@ -12,10 +12,9 @@ public record RegisterRequestDTO(
         String name,
         String email,
         String password,
-         boolean enabled,
+        boolean enabled,
         boolean locked,
         List<Role>roles
 
 
-) {
-}
+) { }

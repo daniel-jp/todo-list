@@ -45,7 +45,7 @@ class AuthServiceTest extends AbstractIntegrationTest {
                         "admin@system.com",
                         "admin",
                         true,
-                        false
+                        false, null
                 );
 
                // authService.createUser(registerRequest);

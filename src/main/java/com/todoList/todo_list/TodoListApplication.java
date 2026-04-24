@@ -81,7 +81,8 @@ public class TodoListApplication  implements CommandLineRunner {
           // 3 - Assign ADMIN role to admin user, if not already done
 			if ( !user.getRoles().contains(userRole)|| !admin.getRoles().contains(adminRole)) {
 
-				user.getRoles().add(userRole);admin.getRoles().add(adminRole);
+				user.getRoles().add(userRole);
+				admin.getRoles().add(adminRole);
 				userRepository.saveAll(List.of(user,admin));
 				System.out.println("✅ ADMIN & USER role assigned to user");
 			}

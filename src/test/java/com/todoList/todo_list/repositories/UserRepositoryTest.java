@@ -43,7 +43,9 @@ class UserRepositoryTest extends AbstractIntegrationTest {
                     "admin@system.com",
                     passwordEncoder.encode("admin"),
                     true,
-                    false);
+                    false,
+                    null);
+
 
              this.createUser(user);
         }

@@ -44,23 +44,28 @@ class UserControllerTest extends AbstractIntegrationTest {
     @DisplayName("Test 1 ➡ Should create a user successfully ✅")
     void createUser_success() throws Exception {
 
-        if (repository.findByEmail("admin@system.com").isEmpty()) {
-            RegisterRequestDTO request = new RegisterRequestDTO(
-                    null,
-                    "Daniel",
-                    "admin@system.com",
-                    "admin",
-                    true,
-                    false
-            );
+        // 🔥 garante que o user não existe
+        repository.findByEmail("admin@system.com")
+                .ifPresent(user -> repository.delete(user));
 
-            mockMvc.perform(post("/api/v1/users")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(request)))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string("User created successful ✅"));
-        }
+        RegisterRequestDTO request = new RegisterRequestDTO(
+                null,
+                "Daniel",
+                "admin@system.com",
+                "admin",
+                true,
+                false,
+                null // roles opcional (depende do teu mapper)
+        );
+
+        mockMvc.perform(post("/api/v1/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User created successful ✅"));
     }
+
+
     @Test
     @DisplayName("Test 2 ➡ Should fail login with invalid credentials ❌")
     void login_fail_invalidCredentials() throws Exception {
