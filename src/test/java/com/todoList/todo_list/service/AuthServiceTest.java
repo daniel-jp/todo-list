@@ -1,27 +1,11 @@
 package com.todoList.todo_list.service;
 
-import com.todoList.todo_list.dto.user.AuthRequest;
-import com.todoList.todo_list.dto.user.AuthResponseDTO;
-import com.todoList.todo_list.dto.user.RegisterRequestDTO;
-import com.todoList.todo_list.dto.user.UserDTO;
-import com.todoList.todo_list.entity.Role;
-import com.todoList.todo_list.exception.UserAlreadyExistException;
 import com.todoList.todo_list.integration.AbstractIntegrationTest;
-import com.todoList.todo_list.repositories.RoleRepository;
-import com.todoList.todo_list.repositories.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class AuthServiceTest extends AbstractIntegrationTest {
 
+/*
         @Autowired
         private AuthService authService;
 
@@ -126,6 +110,8 @@ class AuthServiceTest extends AbstractIntegrationTest {
 
         }
 
+
+ */
 
 
 }

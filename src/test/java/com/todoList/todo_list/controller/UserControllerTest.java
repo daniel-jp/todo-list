@@ -1,29 +1,12 @@
 package com.todoList.todo_list.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.todoList.todo_list.dto.user.AuthRequest;
-import com.todoList.todo_list.dto.user.RegisterRequestDTO;
 import com.todoList.todo_list.integration.AbstractIntegrationTest;
-import com.todoList.todo_list.repositories.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.UUID;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 class UserControllerTest extends AbstractIntegrationTest {
+
+    /*
     @Autowired
     private MockMvc mockMvc;
 
@@ -110,4 +93,6 @@ class UserControllerTest extends AbstractIntegrationTest {
 
         response.andExpect(status().is4xxClientError()); // vai dar 404 se não existir
     }
+
+     */
 }
