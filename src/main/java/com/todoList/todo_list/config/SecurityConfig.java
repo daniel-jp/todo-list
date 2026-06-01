@@ -55,7 +55,6 @@ public class SecurityConfig {
                                         "/api/v1/users/**",
                                         "/api/v1/roles/**","/api/v1/roles/{name}").hasRole("ADMIN")
 
-
                                 .requestMatchers(HttpMethod.POST, "/api/v1/roles/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PUT,"/api/v1/users/**",  "/api/v1/roles/**",
                                         "/api/v1/users/{userId}/lock", "/api/v1/users/{userId}/unlock",

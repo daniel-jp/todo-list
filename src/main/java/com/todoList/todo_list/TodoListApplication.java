@@ -8,12 +8,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class TodoListApplication {
 
-    // implements CommandLineRunner
+
     public static void main(String[] args) {
         SpringApplication.run(TodoListApplication.class, args);
     }
 
     /*
+
+    implements CommandLineRunner
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -77,6 +80,7 @@ public class TodoListApplication {
     }
 
      */
+
 
 
 }
