@@ -13,10 +13,7 @@ public class TodoListApplication {
         SpringApplication.run(TodoListApplication.class, args);
     }
 
-    /*
-
-    implements CommandLineRunner
-
+    /*implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception {
 
@@ -79,8 +76,7 @@ public class TodoListApplication {
         };
     }
 
+
      */
-
-
 
 }
