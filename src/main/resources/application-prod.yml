@@ -1,4 +1,5 @@
 spring:
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -7,9 +8,19 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
+
     show-sql: false
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+    properties:
+      hibernate:
+        format_sql: false
 
 server:
-  port: ${PORT:8080}
+  port: ${PORT}
+
+application:
+  security:
+    jwt:
+      secret-key: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
+      expiration: JWT_EXPIRATION:36000000

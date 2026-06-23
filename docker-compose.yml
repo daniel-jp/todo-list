@@ -2,16 +2,18 @@ version: "3.9"
 
 services:
 
-  db:
-    image: postgres:17.2
-    container_name: todo-db
+  postgres:
+
+    image: postgres:17
+
+    container_name: todo-postgres
 
     restart: always
 
     environment:
+      POSTGRES_DB: todoList_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: todoList_db
 
     ports:
       - "5432:5432"
@@ -19,46 +21,33 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-    networks:
-      - todo-net
-
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d todoList_db"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   app:
-    build:
-      context: .
 
-    image: do-tasks:v1
-    container_name: todo-list
+    build: .
+
+    container_name: todo-api
 
     restart: always
+
+    depends_on:
+      - postgres
 
     ports:
       - "8080:8080"
 
-    depends_on:
-      db:
-        condition: service_healthy
-
     environment:
-      SPRING_PROFILES_ACTIVE: dev
 
-    networks:
-      - todo-net
+      SPRING_PROFILES_ACTIVE: prod
 
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/todoList_db
+
+      SPRING_DATASOURCE_USERNAME: postgres
+
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+      JWT_SECRET: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
+
+      JWT_EXPIRATION: 36000000
 
 volumes:
   postgres_data:
-
-networks:
-  todo-net:
-    driver: bridge
