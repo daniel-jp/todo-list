@@ -1,22 +1,12 @@
 package com.todoList.todo_list;
 
-import com.todoList.todo_list.entity.Role;
-import com.todoList.todo_list.entity.User;
-import com.todoList.todo_list.repositories.RoleRepository;
-import com.todoList.todo_list.repositories.UserRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 @EnableScheduling
-public class TodoListApplication implements CommandLineRunner {
+public class TodoListApplication  {
 
 
     public static void main(String[] args) {
@@ -24,6 +14,7 @@ public class TodoListApplication implements CommandLineRunner {
     }
 
 
+   /*implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception {
 
@@ -85,6 +76,8 @@ public class TodoListApplication implements CommandLineRunner {
 
         };
     }
+
+    */
 
 
 }

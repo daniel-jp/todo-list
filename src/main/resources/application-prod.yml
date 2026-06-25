@@ -17,10 +17,10 @@ spring:
         format_sql: false
 
 server:
-  port: ${PORT}
+  port: ${PORT:8080}
 
 application:
   security:
     jwt:
       secret-key: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
-      expiration: JWT_EXPIRATION:36000000
+      expiration: 36000000
