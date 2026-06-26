@@ -1,9 +1,9 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
+    url: jdbc:postgresql://${PROD_DB_HOST:localhost}:${PROD_DB_PORT:5432}/${PROD_DB_NAME:todoList_db}
+    username: ${PROD_DB_USER}
+    password: ${PROD_DB_PASSWORD}
     name: todo-list
     driver-class-name: org.postgresql.Driver
 
@@ -22,13 +22,13 @@ spring:
         format_sql: false
 
 server:
-  port: ${PORT:8080}
+  port: ${PORT}
 
 application:
   security:
     jwt:
 
-      secret-key: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
-      expiration: 36000000
-#      secret-key: ${JWT_SECRET}
-#      expiration: ${JWT_EXPIRATION}
+      #secret-key: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
+      #expiration: 36000000
+      secret-key: ${JWT_SECRET}
+      expiration: ${JWT_EXPIRATION}

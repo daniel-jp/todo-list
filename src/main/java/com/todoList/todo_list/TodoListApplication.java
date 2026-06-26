@@ -6,14 +6,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class TodoListApplication{
+public class TodoListApplication {
+
 
 
     public static void main(String[] args) {
         SpringApplication.run(TodoListApplication.class, args);
     }
+/*implements CommandLineRunner
 
- /* implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception {
 
@@ -76,7 +77,9 @@ public class TodoListApplication{
         };
     }
 
-  */
+
+
+ */
 
 
 }
