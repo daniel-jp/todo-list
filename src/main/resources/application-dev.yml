@@ -8,7 +8,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
     show-sql: true
 
@@ -22,5 +22,5 @@ server:
 application:
   security:
     jwt:
-      secret-key: ${JWT_SECRET:504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570}
-      expiration: ${JWT_EXPIRATION:36000000}
+      secret-key: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
+      expiration: 36000000

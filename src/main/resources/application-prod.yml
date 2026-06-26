@@ -1,10 +1,15 @@
 spring:
 
   datasource:
-    url: ${DATABASE_URL}
+    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
     username: ${PGUSER}
     password: ${PGPASSWORD}
+    name: todo-list
     driver-class-name: org.postgresql.Driver
+
+  sql:
+    init:
+      mode: always # you won't do this in prod, I'm just doing this for demo purposes
 
   jpa:
     hibernate:
@@ -23,4 +28,4 @@ application:
   security:
     jwt:
       secret-key: ${JWT_SECRET}
-      expiration: ${JWT_EXPIRATION:36000000}
+      expiration: ${JWT_EXPIRATION}
