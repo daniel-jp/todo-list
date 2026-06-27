@@ -20,7 +20,7 @@ services:
 
   app:
     image: danyonly/todo-list-api:v1
-    build: .
+   # build: .
 
     container_name: todo-api
 

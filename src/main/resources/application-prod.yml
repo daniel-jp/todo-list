@@ -1,15 +1,12 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
-    username: ${PROD_DB_USER}
-    password: ${PROD_DB_PASSWORD}
+   # url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     name: todo-list
     driver-class-name: org.postgresql.Driver
-
-  sql:
-    init:
-      mode: always # you won't do this in prod, I'm just doing this for demo purposes
 
   jpa:
     hibernate:
@@ -22,13 +19,10 @@ spring:
         format_sql: false
 
 server:
-  port: ${PORT}
+  port: ${PORT:8080}
 
 application:
   security:
     jwt:
-
-      #secret-key: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
-      #expiration: 36000000
       secret-key: ${JWT_SECRET}
       expiration: ${JWT_EXPIRATION}
