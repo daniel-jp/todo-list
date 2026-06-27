@@ -22,7 +22,7 @@ public class CorsConfig {
         config.setAllowedOrigins(List.of(
 
                 "http://localhost:8082",
-                "https://task-flow-opal-beta.vercel.app/login"
+                "https://task-flow-opal-beta.vercel.app"
                 ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
