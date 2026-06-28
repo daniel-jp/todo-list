@@ -22,7 +22,7 @@ public class CorsConfig {
         config.setAllowedOrigins(List.of(
 
                 "http://localhost:8082",
-                "https://todo-list-api-production-8ddb.up.railway.app"
+                "https://task-flow-khaki-theta.vercel.app/login"
 
                 ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
