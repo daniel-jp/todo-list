@@ -41,7 +41,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid AuthRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
