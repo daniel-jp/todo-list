@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.9"
 
 services:
 
@@ -17,16 +17,25 @@ services:
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - todo-net
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d todoList_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
-    image: danyonly/todo-list-api:v1
-   # build: .
 
+   # build:
+    # context: .
+    image: danyonly/todo-list-api:v1
     container_name: todo-api
 
     depends_on:
-      - db
-
+     db:
+        condition: service_healthy
     ports:
       - "8080:8080"
 
@@ -35,9 +44,20 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/todoList_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-
       JWT_SECRET: 504E635266556A586E3272357538782F413F4428472B4B6250645367566B6570
       JWT_EXPIRATION: 36000000
+    networks:
+      - todo-net
+
+    healthcheck:
+        test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
 
 volumes:
   postgres_data:
+networks:
+  todo-net:
+    driver: bridge
