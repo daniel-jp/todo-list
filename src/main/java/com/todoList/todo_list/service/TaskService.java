@@ -31,7 +31,7 @@ public class TaskService {
     public TaskDTO createTask(TaskRequest request) {
 
         var user = userRepo.findById(request.userId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found ❌"));
         var task = mapper.toTask(request, user);
         
         return mapper.toDTO(taskRepo.save(task));
